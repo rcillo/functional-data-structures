@@ -4,10 +4,10 @@ defmodule PFDS.FasterBinaryTree do
   end
 
   def member(x, {l, y, r}, c) do
-    if x <= y do
-      member(x, l, y)
+    if x < y do
+      member(x, l, c)
     else
-      member(x, r, c)
+      member(x, r, y)
     end
   end
 
