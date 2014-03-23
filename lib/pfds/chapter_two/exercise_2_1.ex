@@ -10,7 +10,7 @@ defmodule PFDS.List do
 
   defp do_suffixes([], suffixes_list), do: suffixes_list
 
-  defp do_suffixes([h | t], suffixes_list), do
+  defp do_suffixes([h | t], suffixes_list) do
     do_suffixes(t, [t | suffixes_list])
   end
 end
