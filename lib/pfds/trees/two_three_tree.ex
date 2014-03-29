@@ -1,4 +1,4 @@
-defmodule BTree do
+defmodule TwoThreeTree do
   def add(x, nil) do
     {[x], nil, 0}
   end
