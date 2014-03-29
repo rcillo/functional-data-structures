@@ -9,7 +9,7 @@ defmodule TwoThreeTree do
 
   def add(x, {[a, b], nil, 0}) do
     [min, med, max] = Enum.sort([x, a, b])
-    {[med], [add(min, nil), add(max, nil)], 1}
+    {[med], [make_leaf(min), make_leaf(max)], 1}
   end
 
   def add(x, {items = [h], subs = [a, b], depth}) do
