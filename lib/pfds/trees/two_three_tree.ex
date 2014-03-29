@@ -12,64 +12,56 @@ defmodule TwoThreeTree do
     {[med], [make_leaf(min), make_leaf(max)], 1}
   end
 
-  def add(x, {items = [h], subs = [a, b], depth}) do
+  def add(x, {items = [h], subs = [a, b], d}) do
     if x > h do
       b1 = add(x, b)
-      {_, _, depth_b} = b
-      {_, _, depth_b1} = b1
 
-      if depth_b1 > depth_b do
+      if depth(b1) > depth(b) do
         {[b1_root], [b1_left, b1_right], _d} = b1
-        {[h, b1_root], [a, b1_left, b1_right], depth}
+        {[h, b1_root], [a, b1_left, b1_right], d}
       else
-        {items, [a, b1], depth}
+        {items, [a, b1], d}
       end
     else
       a1 = add(x, a)
-      {_, _, depth_a} = a
-      {_, _, depth_a1} = a1
 
-      if depth_a1 > depth_a do
+      if depth(a1) > depth(a) do
         {[a1_root], [a1_left, a1_right], _d} = a1
-        {[a1_root, h], [a1_left, a1_right, b], depth}
+        {[a1_root, h], [a1_left, a1_right, b], d}
       else
-        {items, [a1, b], depth}
+        {items, [a1, b], d}
       end
     end
   end
 
-  def add(x, {items = [y, z], subs = [a, b, c], depth}) do
+  def add(x, {items = [y, z], subs = [a, b, c], d}) do
     if x < y do
       a1 = add(x, a)
-      {_, _, depth_a} = a
-      {_, _, depth_a1} = a1
 
-      if depth_a1 > depth_a do
-        {[y], [a1, {[z], [b, c], depth}], depth + 1}
+      if depth(a1) > depth(a) do
+        {[y], [a1, {[z], [b, c], d}], d + 1}
       else
-        {items, [a1, b, c], depth}
+        {items, [a1, b, c], d}
       end
     else
       if x < z do
         b1 = add(x, b)
-        {_, _, depth_b} = b
-        {_, _, depth_b1} = b1
-        if depth_b1 > depth_b do
+
+        if depth(b1) > depth(b) do
           {[b1_root], [l_b1, r_b1], depth_b1} = b1
-          l = {[y], [a, l_b1], depth}
-          r = {[z], [r_b1, c], depth}
-          {[b1_root], [l, r], depth + 1}
+          l = {[y], [a, l_b1], d}
+          r = {[z], [r_b1, c], d}
+          {[b1_root], [l, r], d + 1}
         else
-          {items, [a, b1, c], depth}
+          {items, [a, b1, c], d}
         end
       else
         c1 = add(x, c)
-        {_, _, depth_c} = c
-        {_, _, depth_c1} = c1
-        if depth_c1 > depth_c do
-          {[z], [{[y], [a, b], depth}, c1], depth + 1}
+
+        if depth(c1) > depth(c) do
+          {[z], [{[y], [a, b], d}, c1], d + 1}
         else
-          {items, [a, b, add(x, c)], depth}
+          {items, [a, b, c1], d}
         end
       end
     end
@@ -82,4 +74,6 @@ defmodule TwoThreeTree do
   defp make_leaf(item) do
     make_leaf([item])
   end
+
+  defp depth({_items, _children, d}), do: d
 end
