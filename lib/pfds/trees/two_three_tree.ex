@@ -12,58 +12,58 @@ defmodule TwoThreeTree do
     {[med], [make_leaf(min), make_leaf(max)], 1}
   end
 
-  def add(x, {items = [h], subs = [a, b], d}) do
-    if x > h do
-      b1 = add(x, b)
+  def add(x, {items = [h], subs = [a, b], d}) when x < h do
+    a1 = add(x, a)
 
-      if depth(b1) > depth(b) do
-        {[b1_root], [b1_left, b1_right], _d} = b1
-        {[h, b1_root], [a, b1_left, b1_right], d}
-      else
-        {items, [a, b1], d}
-      end
+    if depth(a1) > depth(a) do
+      {[a1_root], [a1_left, a1_right], _d} = a1
+      {[a1_root, h], [a1_left, a1_right, b], d}
     else
-      a1 = add(x, a)
-
-      if depth(a1) > depth(a) do
-        {[a1_root], [a1_left, a1_right], _d} = a1
-        {[a1_root, h], [a1_left, a1_right, b], d}
-      else
-        {items, [a1, b], d}
-      end
+      {items, [a1, b], d}
     end
   end
 
-  def add(x, {items = [y, z], subs = [a, b, c], d}) do
-    if x < y do
-      a1 = add(x, a)
+  def add(x, {items = [h], subs = [a, b], d}) when x > h do
+    b1 = add(x, b)
 
-      if depth(a1) > depth(a) do
-        {[y], [a1, {[z], [b, c], d}], d + 1}
-      else
-        {items, [a1, b, c], d}
-      end
+    if depth(b1) > depth(b) do
+      {[b1_root], [b1_left, b1_right], _d} = b1
+      {[h, b1_root], [a, b1_left, b1_right], d}
     else
-      if x < z do
-        b1 = add(x, b)
+      {items, [a, b1], d}
+    end
+  end
 
-        if depth(b1) > depth(b) do
-          {[b1_root], [l_b1, r_b1], depth_b1} = b1
-          l = {[y], [a, l_b1], d}
-          r = {[z], [r_b1, c], d}
-          {[b1_root], [l, r], d + 1}
-        else
-          {items, [a, b1, c], d}
-        end
-      else
-        c1 = add(x, c)
+  def add(x, {items = [y, z], subs = [a, b, c], d}) when x < y do
+    a1 = add(x, a)
 
-        if depth(c1) > depth(c) do
-          {[z], [{[y], [a, b], d}, c1], d + 1}
-        else
-          {items, [a, b, c1], d}
-        end
-      end
+    if depth(a1) > depth(a) do
+      {[y], [a1, {[z], [b, c], d}], d + 1}
+    else
+      {items, [a1, b, c], d}
+    end
+  end
+
+  def add(x, {items = [y, z], subs = [a, b, c], d}) when x < z do
+    b1 = add(x, b)
+
+    if depth(b1) > depth(b) do
+      {[b1_root], [l_b1, r_b1], depth_b1} = b1
+      l = {[y], [a, l_b1], d}
+      r = {[z], [r_b1, c], d}
+      {[b1_root], [l, r], d + 1}
+    else
+      {items, [a, b1, c], d}
+    end
+  end
+
+  def add(x, {items = [y, z], subs = [a, b, c], d}) when x > z do
+    c1 = add(x, c)
+
+    if depth(c1) > depth(c) do
+      {[z], [{[y], [a, b], d}, c1], d + 1}
+    else
+      {items, [a, b, c1], d}
     end
   end
 
