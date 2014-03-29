@@ -61,4 +61,28 @@ defmodule TwoThreeTreeTest do
 
     assert expected == tree
   end
+
+  test "add item to left child with enough slots" do
+    tree = Enum.reduce([2, 1, 3, 4, 5, -1], nil, fn(item, tree) -> Tree.add(item, tree) end)
+
+    expected = {[2, 4], [{[-1, 1], nil, 0}, {[3], nil, 0}, {[5], nil, 0}], 1}
+
+    assert tree == expected
+  end
+
+  test "add item to middle child with enough slots" do
+    tree = Enum.reduce([2, 1, 3, 4, 5, 3.5], nil, fn(item, tree) -> Tree.add(item, tree) end)
+
+    expected = {[2, 4], [{[1], nil, 0}, {[3, 3.5], nil, 0}, {[5], nil, 0}], 1}
+
+    assert tree == expected
+  end
+
+  test "add item to right child with enough slots" do
+    tree = Enum.reduce([2, 1, 3, 4, 5, 6], nil, fn(item, tree) -> Tree.add(item, tree) end)
+
+    expected = {[2, 4], [{[1], nil, 0}, {[3], nil, 0}, {[5, 6], nil, 0}], 1}
+
+    assert tree == expected
+  end
 end
