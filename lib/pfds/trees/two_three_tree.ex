@@ -1,14 +1,10 @@
 defmodule TwoThreeTree do
   def add(x, nil) do
-    {[x], nil, 0}
+    make_leaf(x)
   end
 
   def add(x, {[y], nil, 0}) do
-    if x > y do
-      {[y, x], nil, 0}
-    else
-      {[x, y], nil, 0}
-    end
+    make_leaf([x, y])
   end
 
   def add(x, {[a, b], nil, 0}) do
@@ -77,5 +73,13 @@ defmodule TwoThreeTree do
         end
       end
     end
+  end
+
+  defp make_leaf(items) when is_list(items) do
+    {Enum.sort(items), nil, 0}
+  end
+
+  defp make_leaf(item) do
+    make_leaf([item])
   end
 end
