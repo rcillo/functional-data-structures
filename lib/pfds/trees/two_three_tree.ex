@@ -12,7 +12,7 @@ defmodule TwoThreeTree do
     {[med], [make_leaf(min), make_leaf(max)], 1}
   end
 
-  def add(x, {items = [h], subs = [a, b], d}) when x < h do
+  def add(x, {items = [h], [a, b], d}) when x < h do
     a1 = add(x, a)
 
     if depth(a1) > depth(a) do
@@ -23,7 +23,7 @@ defmodule TwoThreeTree do
     end
   end
 
-  def add(x, {items = [h], subs = [a, b], d}) when x > h do
+  def add(x, {items = [h], [a, b], d}) when x > h do
     b1 = add(x, b)
 
     if depth(b1) > depth(b) do
@@ -34,7 +34,7 @@ defmodule TwoThreeTree do
     end
   end
 
-  def add(x, {items = [y, z], subs = [a, b, c], d}) when x < y do
+  def add(x, {items = [y, z], [a, b, c], d}) when x < y do
     a1 = add(x, a)
 
     if depth(a1) > depth(a) do
@@ -44,7 +44,7 @@ defmodule TwoThreeTree do
     end
   end
 
-  def add(x, {items = [y, z], subs = [a, b, c], d}) when x < z do
+  def add(x, {items = [y, z], [a, b, c], d}) when x < z do
     b1 = add(x, b)
 
     if depth(b1) > depth(b) do
@@ -57,7 +57,7 @@ defmodule TwoThreeTree do
     end
   end
 
-  def add(x, {items = [y, z], subs = [a, b, c], d}) when x > z do
+  def add(x, {items = [y, z], [a, b, c], d}) when x > z do
     c1 = add(x, c)
 
     if depth(c1) > depth(c) do
