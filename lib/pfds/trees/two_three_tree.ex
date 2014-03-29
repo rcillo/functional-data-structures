@@ -12,23 +12,23 @@ defmodule TwoThreeTree do
     {[med], [make_leaf(min), make_leaf(max)], 1}
   end
 
-  def add(x, {items = [h], [a, b], d}) when x < h do
+  def add(x, {items = [y], [a, b], d}) when x < y do
     a1 = add(x, a)
 
     if depth(a1) > depth(a) do
       {[a1_root], [a1_left, a1_right], _d} = a1
-      {[a1_root, h], [a1_left, a1_right, b], d}
+      {[a1_root, y], [a1_left, a1_right, b], d}
     else
       {items, [a1, b], d}
     end
   end
 
-  def add(x, {items = [h], [a, b], d}) when x > h do
+  def add(x, {items = [y], [a, b], d}) when x > y do
     b1 = add(x, b)
 
     if depth(b1) > depth(b) do
       {[b1_root], [b1_left, b1_right], _d} = b1
-      {[h, b1_root], [a, b1_left, b1_right], d}
+      {[y, b1_root], [a, b1_left, b1_right], d}
     else
       {items, [a, b1], d}
     end
