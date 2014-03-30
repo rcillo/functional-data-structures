@@ -48,7 +48,7 @@ defmodule TwoThreeTree do
     b1 = add(x, b)
 
     if depth(b1) > depth(b) do
-      {[b1_root], [l_b1, r_b1], depth_b1} = b1
+      {[b1_root], [l_b1, r_b1], _d} = b1
       l = {[y], [a, l_b1], d}
       r = {[z], [r_b1, c], d}
       {[b1_root], [l, r], d + 1}
