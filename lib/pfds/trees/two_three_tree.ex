@@ -1,4 +1,24 @@
 defmodule TwoThreeTree do
+  @moduledoc """
+  A balanced 2-3-tree
+
+  A tree implementation that has guaranteed logarithmic time
+  for both search and insert. It does not degenerate like an
+  unbalaced binary tree.
+
+  Trees are represented by tuples:
+
+  `{ a_list_of_keys, a_list_of_sub_trees, tree_height}`
+
+  - `a_list_of_keys` may contain one or two elements `[y]` or `[y, z]`, where `y` < `z`
+  - `a_list_of_sub_trees` may contain zero or three elements, `[a, b, c]` where
+     every element in `a` are smaller than `y`, every element in `b` are bigger
+     `y` and smaller than `z` and elements in `c` are bigger than `z`.
+  - `tree_height` is 0 for leaf nodes.
+
+  An empty tree is represented by `nil`. This way we do not spare space.
+  """
+
   def add(x, nil) do
     make_leaf(x)
   end
