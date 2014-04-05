@@ -23,22 +23,21 @@ defmodule TwoThreeTree do
     do_member(x, items, subs)
   end
 
-  defp do_member(x, [y | _items], _subs) when x == y do
-    true
-  end
-
+  # Internal: consumes a node, searching from left to right
   defp do_member(x, [y | items], [a | subs]) do
-    if x < y do
-      member(x, a)
-    else
-      do_member(x, items, subs)
+    cond do
+      x < y  -> member(x, a)
+      x > y  -> do_member(x, items, subs)
+      x == y -> true
     end
   end
 
+  # Internal: when the searched element is bigger than all node elements
   defp do_member(x, [], [a]) do
     member(x, a)
   end
 
+  # Internal: when the element is in a leaf
   defp do_member(x, items, nil) do
     Enum.member?(items, x)
   end
