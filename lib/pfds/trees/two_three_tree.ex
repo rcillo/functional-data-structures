@@ -23,7 +23,7 @@ defmodule TwoThreeTree do
     do_member(x, items, subs)
   end
 
-  # Internal: consumes a node, searching from left to right
+  # Internal: searches internal nodes from left to right
   defp do_member(x, [y | items], [a | subs]) do
     cond do
       x < y  -> member(x, a)
@@ -37,7 +37,7 @@ defmodule TwoThreeTree do
     member(x, a)
   end
 
-  # Internal: when the element is in a leaf
+  # Internal: searches leaf elements
   defp do_member(x, items, nil) do
     Enum.member?(items, x)
   end
