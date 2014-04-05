@@ -2,12 +2,46 @@ defmodule TwoThreeTreeTest do
   use ExUnit.Case
   alias TwoThreeTree, as: Tree
 
+  test "finds element in the right" do
+    tree = {[2, 4], [{[1], nil, 0}, {[3], nil, 0}, {[5], nil, 0}], 1}
+    assert Tree.member(5, tree)
+  end
+
+  test "finds element in the root" do
+    tree = {[2], [{[1], nil, 0}, {[3], nil, 0}], 1}
+    assert Tree.member(2, tree)
+  end
+
+  test "finds element in middle subtree" do
+    tree = {[2], [{[1], nil, 0}, {[3], nil, 0}], 1}
+    assert Tree.member(3, tree)
+  end
+
+  test "finds element in left subtree" do
+    tree = {[2], [{[1], nil, 0}, {[3], nil, 0}], 1}
+    assert Tree.member(1, tree)
+  end
+
+  test "finds element in a two element leaf" do
+    tree = {[1, 2], nil, 0}
+
+    assert Tree.member(1, tree)
+    assert Tree.member(2, tree)
+  end
+
+  test "finds element in a one element leaf" do
+    tree = Tree.add(1, nil)
+
+    assert Tree.member(1, {[1], nil, 0})
+  end
+
   test "add new leaf" do
     assert {[1], nil, 0} == Tree.add(1, nil)
   end
 
   test "add item to an existing leaf node with enough slots" do
     non_full_leaf = Tree.add(1, nil)
+
     assert {[1, 2], nil, 0} == Tree.add(2, non_full_leaf)
   end
 

@@ -19,6 +19,30 @@ defmodule TwoThreeTree do
   An empty tree is represented by `nil`. This way we do not spare space.
   """
 
+  def member(x, {items, subs, _d}) do
+    do_member(x, items, subs)
+  end
+
+  defp do_member(x, [y | _items], _subs) when x == y do
+    true
+  end
+
+  defp do_member(x, [y | items], [a | subs]) do
+    if x < y do
+      member(x, a)
+    else
+      do_member(x, items, subs)
+    end
+  end
+
+  defp do_member(x, [], [a]) do
+    member(x, a)
+  end
+
+  defp do_member(x, items, nil) do
+    Enum.member?(items, x)
+  end
+
   def add(x, nil) do
     make_leaf(x)
   end
